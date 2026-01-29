@@ -13,7 +13,6 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from "recharts"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { StatsCard, StatsGrid } from "@/components/stats-card"
 import {
     Table,
@@ -91,122 +90,131 @@ export default function AnalyticsPage() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold mb-2">Analytics</h1>
-                <p className="text-muted-foreground">
+        <div className="container mx-auto px-6 lg:px-8 py-12 max-w-7xl">
+            <div className="mb-10 text-center sm:text-left">
+                <h1 className="text-4xl font-bold mb-3 tracking-tight">Analytics</h1>
+                <p className="text-muted-foreground text-lg">
                     Track the performance of your short URLs
                 </p>
             </div>
 
             {/* Stats */}
-            <StatsGrid className="mb-8">
-                <StatsCard
-                    title="Total Links"
-                    value={urls.length}
-                    icon={Link2}
-                />
-                <StatsCard
-                    title="Total Clicks"
-                    value={totalClicks}
-                    icon={MousePointer}
-                />
-                <StatsCard
-                    title="Average CTR"
-                    value={urls.length > 0 ? `${Math.round((totalClicks / urls.length))}` : "0"}
-                    description="clicks per link"
-                    icon={TrendingUp}
-                />
-                <StatsCard
-                    title="Best Performer"
-                    value={topUrls[0]?.clicks || 0}
-                    description={topUrls[0] ? `/${topUrls[0].short_slug}` : "No data"}
-                    icon={BarChart3}
-                />
-            </StatsGrid>
+            <div className="mb-12">
+                <StatsGrid>
+                    <StatsCard
+                        title="Total Links"
+                        value={urls.length}
+                        icon={Link2}
+                    />
+                    <StatsCard
+                        title="Total Clicks"
+                        value={totalClicks}
+                        icon={MousePointer}
+                    />
+                    <StatsCard
+                        title="Average CTR"
+                        value={urls.length > 0 ? `${Math.round((totalClicks / urls.length))}` : "0"}
+                        description="clicks per link"
+                        icon={TrendingUp}
+                    />
+                    <StatsCard
+                        title="Best Performer"
+                        value={topUrls[0]?.clicks || 0}
+                        description={topUrls[0] ? `/${topUrls[0].short_slug}` : "No data"}
+                        icon={BarChart3}
+                    />
+                </StatsGrid>
+            </div>
 
             {/* Chart */}
-            <Card className="mb-8">
-                <CardHeader>
-                    <CardTitle>Click Activity</CardTitle>
-                    <CardDescription>Clicks over the last 7 days</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="h-[300px]">
+            <div className="mb-12">
+                <div className="luxury-card rounded-2xl p-6 sm:p-8">
+                    <div className="mb-6">
+                        <h2 className="text-2xl font-semibold mb-2">Click Activity</h2>
+                        <p className="text-sm text-muted-foreground">Clicks over the last 7 days</p>
+                    </div>
+                    <div className="h-[300px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={chartData}>
+                            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="colorClicks" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="hsl(24, 98%, 48%)" stopOpacity={0.3} />
+                                        <stop offset="5%" stopColor="hsl(24, 98%, 48%)" stopOpacity={0.2} />
                                         <stop offset="95%" stopColor="hsl(24, 98%, 48%)" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
                                 <XAxis
                                     dataKey="date"
-                                    className="text-xs fill-muted-foreground"
                                     tickLine={false}
                                     axisLine={false}
+                                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                                    dy={10}
                                 />
                                 <YAxis
-                                    className="text-xs fill-muted-foreground"
                                     tickLine={false}
                                     axisLine={false}
+                                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
                                 />
                                 <Tooltip
                                     contentStyle={{
                                         backgroundColor: "hsl(var(--card))",
-                                        border: "1px solid hsl(var(--border))",
-                                        borderRadius: "8px",
+                                        borderColor: "hsl(var(--border))",
+                                        borderRadius: "12px",
+                                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                                        padding: "8px 12px",
                                     }}
+                                    itemStyle={{ color: "hsl(var(--foreground))", fontWeight: 500 }}
+                                    labelStyle={{ color: "hsl(var(--muted-foreground))", marginBottom: "4px" }}
                                 />
                                 <Area
                                     type="monotone"
                                     dataKey="clicks"
                                     stroke="hsl(24, 98%, 48%)"
-                                    strokeWidth={2}
+                                    strokeWidth={3}
                                     fillOpacity={1}
                                     fill="url(#colorClicks)"
                                 />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
-                </CardContent>
-            </Card>
+                </div>
+            </div>
 
             {/* Top Performing URLs */}
-            <Card>
-                <CardHeader>
-                    <CardTitle>Top Performing Links</CardTitle>
-                    <CardDescription>Your best performing short URLs</CardDescription>
-                </CardHeader>
-                <CardContent>
+            <div className="luxury-card rounded-2xl overflow-hidden">
+                <div className="p-6 sm:p-8 border-b">
+                    <h2 className="text-2xl font-semibold mb-2">Top Performing Links</h2>
+                    <p className="text-sm text-muted-foreground">Your best performing short URLs</p>
+                </div>
+                <div className="p-0">
                     {topUrls.length === 0 ? (
-                        <div className="text-center py-8 text-muted-foreground">
-                            <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                        <div className="text-center py-12 text-muted-foreground">
+                            <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-20" />
                             <p>No data available yet. Create some short URLs to see analytics.</p>
                         </div>
                     ) : (
                         <Table>
                             <TableHeader>
-                                <TableRow>
-                                    <TableHead>Rank</TableHead>
-                                    <TableHead>Short URL</TableHead>
-                                    <TableHead>Original URL</TableHead>
-                                    <TableHead className="text-right">Clicks</TableHead>
+                                <TableRow className="hover:bg-transparent border-border/50">
+                                    <TableHead className="pl-8 h-12">Rank</TableHead>
+                                    <TableHead className="h-12">Short URL</TableHead>
+                                    <TableHead className="h-12">Original URL</TableHead>
+                                    <TableHead className="text-right pr-8 h-12">Clicks</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {topUrls.map((url, index) => (
-                                    <TableRow key={url.id}>
-                                        <TableCell className="font-medium">#{index + 1}</TableCell>
+                                    <TableRow key={url.id} className="hover:bg-muted/30 border-border/50 transition-colors">
+                                        <TableCell className="font-medium pl-8 text-muted-foreground">#{index + 1}</TableCell>
                                         <TableCell>
-                                            <code className="text-primary font-medium">/{url.short_slug}</code>
+                                            <div className="flex items-center gap-2">
+                                                <code className="bg-primary/10 text-primary px-2 py-1 rounded-md text-sm font-medium">/{url.short_slug}</code>
+                                            </div>
                                         </TableCell>
-                                        <TableCell className="text-muted-foreground">
+                                        <TableCell className="text-muted-foreground max-w-[200px] truncate">
                                             {truncateUrl(url.original_url, 40)}
                                         </TableCell>
-                                        <TableCell className="text-right font-semibold">
+                                        <TableCell className="text-right font-bold pr-8">
                                             {url.clicks.toLocaleString()}
                                         </TableCell>
                                     </TableRow>
@@ -214,8 +222,8 @@ export default function AnalyticsPage() {
                             </TableBody>
                         </Table>
                     )}
-                </CardContent>
-            </Card>
+                </div>
+            </div>
         </div>
     )
 }

@@ -110,7 +110,7 @@ export default function RegisterPage() {
             <Card className="w-full max-w-md">
                 <CardHeader className="text-center">
                     <div className="flex justify-center mb-4">
-                        <div className="h-12 w-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center">
+                        <div className="h-12 w-12 rounded-sm bg-primary text-primary-foreground flex items-center justify-center">
                             <Link2 className="h-6 w-6" />
                         </div>
                     </div>

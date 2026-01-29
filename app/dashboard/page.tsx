@@ -71,46 +71,55 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-                <p className="text-muted-foreground">
+        <div className="container mx-auto px-6 lg:px-8 py-12 max-w-7xl">
+            <div className="mb-10 text-center sm:text-left">
+                <h1 className="text-4xl font-bold mb-3 tracking-tight">Dashboard</h1>
+                <p className="text-muted-foreground text-lg">
                     Manage your short URLs and track their performance
                 </p>
             </div>
 
             {/* Stats */}
-            <StatsGrid className="mb-8">
-                <StatsCard
-                    title="Total Links"
-                    value={urls.length}
-                    icon={Link2}
-                />
-                <StatsCard
-                    title="Total Clicks"
-                    value={totalClicks}
-                    icon={MousePointer}
-                />
-                <StatsCard
-                    title="Average Clicks"
-                    value={urls.length > 0 ? Math.round(totalClicks / urls.length) : 0}
-                    icon={BarChart3}
-                />
-            </StatsGrid>
+            <div className="mb-12">
+                <StatsGrid>
+                    <StatsCard
+                        title="Total Links"
+                        value={urls.length}
+                        icon={Link2}
+                    />
+                    <StatsCard
+                        title="Total Clicks"
+                        value={totalClicks}
+                        icon={MousePointer}
+                    />
+                    <StatsCard
+                        title="Average Clicks"
+                        value={urls.length > 0 ? Math.round(totalClicks / urls.length) : 0}
+                        icon={BarChart3}
+                    />
+                </StatsGrid>
+            </div>
 
             {/* Create URL Form */}
-            <div className="mb-8">
-                <URLInputForm onSuccess={handleUrlCreated} />
+            <div className="mb-12">
+                <div className="luxury-card rounded-2xl p-6 sm:p-8">
+                    <h2 className="text-2xl font-semibold mb-6">Create New Link</h2>
+                    <URLInputForm onSuccess={handleUrlCreated} />
+                </div>
             </div>
 
             {/* URL Table */}
-            <div>
-                <h2 className="text-xl font-semibold mb-4">Your Links</h2>
-                <URLTable
-                    urls={urls}
-                    onDelete={handleUrlDeleted}
-                    isLoading={isLoading}
-                />
+            <div className="luxury-card rounded-2xl overflow-hidden">
+                <div className="p-6 sm:p-8 border-b">
+                    <h2 className="text-2xl font-semibold">Your Links</h2>
+                </div>
+                <div className="p-0">
+                    <URLTable
+                        urls={urls}
+                        onDelete={handleUrlDeleted}
+                        isLoading={isLoading}
+                    />
+                </div>
             </div>
         </div>
     )
