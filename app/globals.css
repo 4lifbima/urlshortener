@@ -1,26 +1,163 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary colors - Orange #f55b02 */
+  --primary: 24 98% 48%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary - Darker orange */
+  --secondary: 24 80% 38%;
+  --secondary-foreground: 0 0% 100%;
+
+  /* Accent - Light orange */
+  --accent: 24 100% 95%;
+  --accent-foreground: 24 98% 30%;
+
+  /* Background */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 9%;
+
+  /* Card */
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 9%;
+
+  /* Popover */
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 9%;
+
+  /* Muted */
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+
+  /* Border */
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 24 98% 48%;
+
+  /* Destructive */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Radius */
+  --radius: 0.625rem;
+}
+
+.dark {
+  /* Primary colors - Orange #f55b02 */
+  --primary: 24 98% 48%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary - Lighter orange for dark mode */
+  --secondary: 24 80% 55%;
+  --secondary-foreground: 0 0% 100%;
+
+  /* Accent */
+  --accent: 24 40% 15%;
+  --accent-foreground: 24 98% 70%;
+
+  /* Background */
+  --background: 0 0% 6%;
+  --foreground: 0 0% 95%;
+
+  /* Card */
+  --card: 0 0% 9%;
+  --card-foreground: 0 0% 95%;
+
+  /* Popover */
+  --popover: 0 0% 9%;
+  --popover-foreground: 0 0% 95%;
+
+  /* Muted */
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 60%;
+
+  /* Border */
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: 24 98% 48%;
+
+  /* Destructive */
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: hsl(var(--border));
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Smooth transitions for theme changes */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.dark .glass {
+  background: hsl(var(--background) / 0.6);
 }
