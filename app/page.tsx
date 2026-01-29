@@ -197,18 +197,16 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Shorten Your Links?
-          </h2>
-          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Join thousands of users who trust ShortURL for their link management needs.
+      <section className="py-20 bg-gradient-to-br from-primary/10 via-transparent to-orange-500/10">
+        <div className="container mx-auto px-6 lg:px-8 max-w-4xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Want to work together?</h2>
+          <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+            I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
           </p>
-          <Button size="lg" variant="secondary" asChild className="text-base">
-            <Link href="/register">
-              Start Free Today
-              <ArrowRight className="ml-2 h-5 w-5" />
+          <Button size="lg" asChild className="rounded-xl px-8 gap-2 shadow-lg shadow-primary/20">
+            <Link href="mailto:alifbima@example.com">
+              Get In Touch
+              <ArrowRight className="h-5 w-5" />
             </Link>
           </Button>
         </div>
@@ -216,13 +214,13 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="py-8 border-t">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2 font-bold">
+            <div className="flex items-center font-bold">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <Link2 className="h-4 w-4" />
               </div>
-              Short<span className="text-primary">URL</span>
+              <span className="text-xl ml-2">Shortify</span><span className="text-primary text-xl">URL</span>
             </div>
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} ShortURL. All rights reserved.

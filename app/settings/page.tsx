@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Loader2, User, Save, Shield, Mail } from "lucide-react"
+import { Loader2, User, Save, Shield, Mail, UserCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -14,16 +14,49 @@ import toast from "react-hot-toast"
 export default function SettingsPage() {
     const { user, loading } = useAuth()
     const router = useRouter()
+    const [displayName, setDisplayName] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
-    const [isUpdating, setIsUpdating] = useState(false)
+    const [isUpdatingProfile, setIsUpdatingProfile] = useState(false)
+    const [isUpdatingPassword, setIsUpdatingPassword] = useState(false)
     const supabase = createClient()
 
     useEffect(() => {
         if (!loading && !user) {
             router.push("/login")
         }
+        // Initialize display name from user metadata
+        if (user?.user_metadata?.display_name) {
+            setDisplayName(user.user_metadata.display_name)
+        } else if (user?.user_metadata?.full_name) {
+            setDisplayName(user.user_metadata.full_name)
+        }
     }, [user, loading, router])
+
+    const handleUpdateProfile = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        if (!displayName.trim()) {
+            toast.error("Display name cannot be empty")
+            return
+        }
+
+        setIsUpdatingProfile(true)
+
+        try {
+            const { error } = await supabase.auth.updateUser({
+                data: { display_name: displayName.trim() }
+            })
+
+            if (error) throw error
+
+            toast.success("Display name updated successfully")
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : "Failed to update profile")
+        } finally {
+            setIsUpdatingProfile(false)
+        }
+    }
 
     const handleUpdatePassword = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -38,7 +71,7 @@ export default function SettingsPage() {
             return
         }
 
-        setIsUpdating(true)
+        setIsUpdatingPassword(true)
 
         try {
             const { error } = await supabase.auth.updateUser({
@@ -53,7 +86,7 @@ export default function SettingsPage() {
         } catch (error) {
             toast.error(error instanceof Error ? error.message : "Failed to update password")
         } finally {
-            setIsUpdating(false)
+            setIsUpdatingPassword(false)
         }
     }
 
@@ -75,7 +108,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="grid gap-8">
-                {/* Profile Information (Read-only for now) */}
+                {/* Profile Information */}
                 <div className="luxury-card rounded-2xl p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                         <div className="p-2.5 rounded-xl bg-primary/10 text-primary">
@@ -87,7 +120,24 @@ export default function SettingsPage() {
                         </div>
                     </div>
 
-                    <div className="space-y-4 max-w-md">
+                    <form onSubmit={handleUpdateProfile} className="space-y-4 max-w-md">
+                        {/* Display Name - Editable */}
+                        <div className="space-y-2">
+                            <Label htmlFor="display-name">Display Name</Label>
+                            <div className="relative">
+                                <UserCircle className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    id="display-name"
+                                    value={displayName}
+                                    onChange={(e) => setDisplayName(e.target.value)}
+                                    placeholder="Enter your display name"
+                                    className="pl-10"
+                                />
+                            </div>
+                            <p className="text-xs text-muted-foreground">This name will be visible to others.</p>
+                        </div>
+
+                        {/* Email - Read-only */}
                         <div className="space-y-2">
                             <Label htmlFor="email">Email Address</Label>
                             <div className="relative">
@@ -99,9 +149,25 @@ export default function SettingsPage() {
                                     className="pl-10 bg-muted/50 cursor-not-allowed"
                                 />
                             </div>
-                            <p className="text-xs text-muted-foreground">Email cannot be changed via settings currently.</p>
+                            <p className="text-xs text-muted-foreground">Email cannot be changed via settings.</p>
                         </div>
-                    </div>
+
+                        <div className="pt-2">
+                            <Button type="submit" disabled={isUpdatingProfile}>
+                                {isUpdatingProfile ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Saving...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Save className="mr-2 h-4 w-4" />
+                                        Save Profile
+                                    </>
+                                )}
+                            </Button>
+                        </div>
+                    </form>
                 </div>
 
                 {/* Password Update */}
@@ -139,8 +205,8 @@ export default function SettingsPage() {
                         </div>
 
                         <div className="pt-2">
-                            <Button type="submit" disabled={isUpdating || !password}>
-                                {isUpdating ? (
+                            <Button type="submit" disabled={isUpdatingPassword || !password}>
+                                {isUpdatingPassword ? (
                                     <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                         Updating...
