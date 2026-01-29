@@ -42,7 +42,7 @@ export function Header() {
                         <Link2 className="h-6 w-6" />
                     </div>
                     <span className="sm:inline text-xl tracking-tight">
-                        Short<span className="text-primary">URL</span>
+                        Shortify<span className="text-primary">URL</span>
                     </span>
                 </Link>
 

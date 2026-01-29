@@ -15,9 +15,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 const skills = [
-    { name: "Frontend", icon: Code2, items: ["React", "Next.js", "TypeScript", "TailwindCSS"] },
-    { name: "Backend", icon: Server, items: ["Node.js", "Express", "Go", "Python"] },
-    { name: "Database", icon: Database, items: ["PostgreSQL", "MongoDB", "Redis", "Supabase"] },
+    { name: "Frontend", icon: Code2, items: ["React", "Vue JS", "Next.js", "Nuxt JS", "TypeScript", "TailwindCSS", "Bootstrap"] },
+    { name: "Backend", icon: Server, items: ["Node.js", "Express", "Go", "Python", "PHP", "Laravel", "Nest JS"] },
+    { name: "Database", icon: Database, items: ["PostgreSQL", "MongoDB", "Redis", "Supabase", "MySQL"] },
     { name: "Mobile", icon: Smartphone, items: ["React Native", "Flutter"] },
 ]
 
@@ -49,10 +49,8 @@ export default function DeveloperPage() {
                     <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
                         {/* Avatar */}
                         <div className="relative">
-                            <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl bg-gradient-to-br from-primary to-orange-600 p-1 shadow-2xl shadow-primary/30">
-                                <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
-                                    <span className="text-6xl md:text-8xl font-bold gradient-text">AB</span>
-                                </div>
+                            <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl bg-gradient-to-br from-orange-200 to-orange-500 p-1 shadow-2xl shadow-primary/30">
+                                <img src="./alif.jpeg" alt="Avatar" className="w-full h-full rounded-xl" />
                             </div>
                             <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-green-500 rounded-full border-4 border-background flex items-center justify-center">
                                 <Globe className="w-5 h-5 text-white" />
@@ -63,7 +61,7 @@ export default function DeveloperPage() {
                         <div className="text-center md:text-left flex-1">
                             <p className="text-primary font-semibold mb-2 tracking-wide uppercase text-sm">Fullstack Developer</p>
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
-                                Alif Bima <span className="gradient-text">Pradana</span>
+                                Alif Bima Pradana
                             </h1>
                             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed">
                                 Passionate about building modern, scalable web applications with clean code and exceptional user experiences. Transforming ideas into reality through technology.
